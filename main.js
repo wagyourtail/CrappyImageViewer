@@ -6,6 +6,8 @@ const ipc = require('electron').ipcMain;
 
 let win;
 
+global.dir = process.argv[process.argv.length-1];
+
 
 function createWindow() {
     win  = new BrowserWindow({frame:false,width:1440, height:900});
@@ -19,6 +21,7 @@ function createWindow() {
     win.webContents.openDevTools();
 
     win.setFullScreen(true);
+    
     win.on('closed', () => {
         win = null;
     });
