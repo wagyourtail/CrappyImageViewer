@@ -33,7 +33,16 @@ let setImg = (str) => {
 
 
 
+ let setImgIcons = async () => {
+    return new Promise((resolve, reject) => {
+        let imageIcons = document.getElementById("imageIcons");
+        for(let x = 0; x < files.length; x++) {
+            imageIcons.innerHTML = `${imageIcons.innerHTML}\n<div id="image-${x}"><center><img height="90px" width="90px"><p id="imagename-${x}">${files[x]}</p></center></div>`
+        }
+    });
+}
 
+//setImgIcons();
 
 
 let currentImg = 0;
@@ -75,4 +84,7 @@ const resizeFn = () => {
 
 
 window.addEventListener("resize", resizeFn);
+window.addEventListener("move", (info) => {
+    console.log(`move${info}`);
+});
 resizeFn();
