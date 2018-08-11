@@ -13,6 +13,7 @@ body {
 }
 
 #topbarContainer #topbar {
+    overflow:hidden;
     width: 100%;
     height: 0px;
     transform: all .5s ease;
@@ -25,9 +26,45 @@ body {
 }
 
 #titlebtns {
-    right: 0px;
+    z-index: 4;
     display: grid;
-    grid-template-columns: 20px 20px 20px;
+    grid-template-columns: auto 30px 30px;
+    border-bottom: 2px;
+    border-bottom-style: solid;
+    border-bottom-color: black;
+}
+
+#titlebtns div {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#minBtn:hover {
+    background-color: #bbbbbb;
+}
+
+#closeBtn:hover {
+    background-color: #ff2222;
+}
+
+#imageIcons {
+    width: 100%;
+    overflow-x: scroll;
+}
+
+#imageIcons div {
+    width: 100px;
+    overflow: hidden;
+    border-width: 2px;
+    border-color: gray;
+    border-style: solid;
+    margin: 10px;
+    padding: 5px;
+    border-radius: 10%;
+}
+
+#imageIcons div:hover {
+    background-color: lightgray;
 }
 
 
@@ -40,13 +77,24 @@ body {
 }
 
 #info {
+    position:fixed;
+    top: 3px;
+    left: 3px;
+    z-index: 1;
     color: greenyellow;
-    text-shadow: 1px;
+    text-shadow: 2px;
+    font-weight: bold;
 }
 
 #currentImg {
+    cursor: -webkit-zoom-in;
     position: fixed;
-    z-index: 1;
+    z-index: 0;
     top: 0px;
+    right: 0;
+    left: 0;
+    margin-right: auto;
+    margin-left: auto;
     max-width: 100%;
+    object-fit: contain;
 }
