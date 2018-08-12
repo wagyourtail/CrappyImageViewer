@@ -10,7 +10,7 @@
             "name": "Electron Main",
             "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
             "program": "${workspaceFolder}/main.js",
-            "args": ["E:/Users/william/Desktop/PHONE/Pictures/Candid"],
+            "args": ["C:/Users/ruwag/OneDrive/Pictures/Backround Pics", "C:/flattened"],
             "protocol": "inspector"
         }
     ]
