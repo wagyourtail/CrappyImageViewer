@@ -1,4 +1,5 @@
 body {
+    -webkit-user-select: none;
     margin:0px;
     background-color: black;
 }
@@ -8,7 +9,7 @@ body {
     top: 0px;
     z-index: 3;
     width: 100%;
-    height:10px;
+    height:30px;
 }
 
 #topbarContainer #topbar {
@@ -27,7 +28,7 @@ body {
 #titlebtns {
     z-index: 4;
     display: grid;
-    grid-template-columns: auto 30px 30px;
+    grid-template-columns: auto 30px 30px 30px;
     border-bottom: 2px;
     border-bottom-style: solid;
     border-bottom-color: black;
@@ -42,6 +43,10 @@ body {
     background-color: #dddddd;
 }
 
+#maxBtn:hover {
+    background-color: #dddddd;
+}
+
 #closeBtn:hover {
     background-color: #ff2222;
 }
@@ -49,10 +54,12 @@ body {
 #imageIcons {
     width: 100%;
     overflow-x: scroll;
+    white-space: nowrap;
 }
 
 #imageIcons div {
     width: 100px;
+    display: inline-block;
     overflow: hidden;
     border-width: 2px;
     border-color: gray;
@@ -60,6 +67,11 @@ body {
     margin: 10px;
     padding: 5px;
     border-radius: 10%;
+}
+
+#imageIcons div p {
+    display: block;
+    font-size: .5em;
 }
 
 #imageIcons div:hover {

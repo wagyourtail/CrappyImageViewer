@@ -18,48 +18,49 @@ dirList.forEach(x => {
 });
 
 
-let setImg = (str) => {
-        imageSize(`${dir}/${str}`, (err,info) => {
-            const currentImg = document.getElementById("currentImg");
-            if(info) {
-                currentImg.setAttribute("src", `${dir}/${str}`);
-                document.getElementById("info").innerHTML = `${str} (${info.width} / ${info.height}) ${parseInt(fs.statSync(`${dir}/${str}`).size/1024)} KiB`;
-            } else {
-                currentImg.setAttribute("src", `${dir}/${str}`);
-                document.getElementById("info").innerHTML = `${str} ${parseInt(fs.statSync(`${dir}/${str}`).size/1024)} KiB`;
-            }
-        });
+
+let setImgIcons = async () => {
+    let imageIcons = document.getElementById("imageIcons");
+    for(let x = 0; x < files.length; x++) {
+        imageIcons.innerHTML = `${imageIcons.innerHTML}\n<div id="image-${x}" onClick="setImg(${x})"><center><img height="90px" width="90px"><p id="imagename-${x}">${files[x]}</p></center></div>`
+    }
 }
 
 
-
- let setImgIcons = async () => {
-    return new Promise((resolve, reject) => {
-        let imageIcons = document.getElementById("imageIcons");
-        for(let x = 0; x < files.length; x++) {
-            imageIcons.innerHTML = `${imageIcons.innerHTML}\n<div id="image-${x}"><center><img height="90px" width="90px"><p id="imagename-${x}">${files[x]}</p></center></div>`
-        }
-    });
-}
-
-//setImgIcons();
+setImgIcons();
 
 
 let currentImg = 0;
 
+let setImg = (num) => {
+    let str = files[num];
+    currentImg = num;
+    imageSize(`${dir}/${str}`, (err,info) => {
+        const currentImg = document.getElementById("currentImg");
+        if(info) {
+            currentImg.setAttribute("src", `${dir}/${str}`);
+            document.getElementById("info").innerHTML = `${str} (${info.width} / ${info.height}) ${parseInt(fs.statSync(`${dir}/${str}`).size/1024)} KiB`;
+        } else {
+            currentImg.setAttribute("src", `${dir}/${str}`);
+            document.getElementById("info").innerHTML = `${str} ${parseInt(fs.statSync(`${dir}/${str}`).size/1024)} KiB`;
+        }
+    });
+}
+
+
+
 let shuffle = () => {
-    for (let x = 0; x < files.length; x++) {
+    for (let x = files.length-1; x > 0 ; x--) {
+        const y = Math.floor(Math.random() * (x+1));
         
     }
 };
 
 window.addEventListener("keydown", (key) => {
     if (key.key == "ArrowLeft" && currentImg > 0) {
-        currentImg--;
-        setImg(files[currentImg]).catch(console.log);
+        setImg(currentImg-1)
     } else if (key.key =="ArrowRight" && currentImg < files.length-1) {
-        currentImg++;
-        setImg(files[currentImg]).catch(console.log);
+        setImg(currentImg+1)
     } else if (key.key == "F7"){
         shuffle();
     }
@@ -70,6 +71,12 @@ setImg(files[0]);
 
 
 document.getElementById("minBtn").addEventListener("click", () => {remote.BrowserWindow.getFocusedWindow().minimize()});
+document.getElementById("maxBtn").addEventListener("click", () => {
+    let fullscreen = remote.BrowserWindow.getFocusedWindow().isFullScreen();
+    remote.BrowserWindow.getFocusedWindow().setFullScreen(!fullscreen);
+    document.getElementById("topbar").setAttribute("style", fullscreen ? "height: 20px;" : "");
+    document.getElementById("title").setAttribute("style", fullscreen ? "-webkit-app-region: drag;" : "");
+});
 document.getElementById("closeBtn").addEventListener("click", window.close);
 
 
