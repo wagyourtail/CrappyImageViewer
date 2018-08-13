@@ -10,7 +10,7 @@ global.dir = process.argv[process.argv.length-1];
 
 
 function createWindow() {
-    win  = new BrowserWindow({frame:false,width:1440, height:900,webPreferences: {nodeIntegrationInWorker: true}});
+    win  = new BrowserWindow({frame:false,width:1440, height:900,webPreferences: {offscreen: false, nodeIntegrationInWorker: true}});
 
     win.loadURL(url.format({
         pathname: path.join(__dirname, 'src/html/index.html'),
