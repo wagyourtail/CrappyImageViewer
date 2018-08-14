@@ -1,6 +1,7 @@
 const electron = require("electron");
 const imageSize = require('image-size');
 const fs = require("fs");
+const path = require("path");
 const remote = electron.remote;
 let dir = "";
 let directorys = [];
@@ -26,6 +27,7 @@ const shuffle = () => {
         }
     }
     scrollFn();
+    alert("shuffle finished!");
 }
 
 
@@ -63,24 +65,31 @@ const scrollFn = () => {
     }
 }
 
-let setFolder = (d) => {
-    dir = d;
-    files = [];
-    directorys = [];
-    let dirList = fs.readdirSync(dir);
-    
-    imageIcons.innerHTML = "";
-    title.innerHTML = dir;
-    dirList.forEach(x => {
-        if (fs.statSync(`${dir}/${x}`).isDirectory()) {
-            directorys.push(x);
-        } else {
-            files.push(x);
-        }
-    });
+const setFolder = (d) => {
+    if (d && d[0]) {
+        dir = fs.statSync(d[0]).isDirectory() ? d[0] : path.dirname(d[0]);
+        files = [];
+        directorys = [];
+        let dirList = fs.readdirSync(dir);
+        
+        imageIcons.innerHTML = "";
+        title.innerHTML = dir;
+        dirList.forEach(x => {
+            if (fs.statSync(`${dir}/${x}`).isDirectory()) {
+                directorys.push(x);
+            } else {
+                files.push(x);
+            }
+        });
 
-    loadIcons.postMessage({dir:dir, files:files});
-    setImg(0);
+        loadIcons.postMessage({dir:dir, files:files});
+
+        if (fs.statSync(d[0]).isFile()) {
+            setImg(files.indexOf(path.basename(d[0])));
+        } else {
+            setImg(0);
+        }
+    }
 }
 
 // ----------- EVENTS ----------- //
@@ -125,12 +134,11 @@ imageIcons.addEventListener("scroll", scrollFn);
 window.addEventListener("resize", resizeFn);
 
 title.addEventListener("click" , () => {
-    setFolder(remote.dialog.showOpenDialog(remote.BrowserWindow.getFocusedWindow(), {properties: ['openDirectory']})[0]);
-
+    let d = remote.dialog.showOpenDialog(remote.BrowserWindow.getFocusedWindow(), {properties: ['openDirectory']});
+    setFolder(d);
 });
 
 // ----- MAIN CODE ----- //
 
-
-setFolder(remote.getGlobal("dir"));
+setFolder([remote.getGlobal("dir")]);
 resizeFn();
