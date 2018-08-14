@@ -25,6 +25,14 @@ body {
     height: 200px;
 }
 
+#title {
+    cursor: pointer;
+}
+
+#title:hover {
+    background-color: #dddddd;
+}
+
 #titlebtns {
     z-index: 4;
     display: grid;
@@ -68,6 +76,7 @@ body {
     padding: 5px;
     border-radius: 10%;
     font-size: .5em;
+    cursor: pointer;
 }
 
 #imageIcons div p {
