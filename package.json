@@ -1,0 +1,30 @@
+{
+  "name": "crappyimageviewer",
+  "productName": "Crappy Image Viewer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "image-size": "^0.6.3",
+    "jimp": "^0.3.5"
+  },
+  "devDependencies": {
+    "electron": "2.0.7",
+    "electron-packager": "12.1.0"
+  },
+  "scripts": {
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=icon.icns --prune=true --out=release-builds",
+    "package-win": "electron-packager . crappyimageviewer --overwrite --asar=true --platform=win32 --arch=ia32 --icon=icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Electron Tutorial App\"",    
+    "package-linux": "electron-packager . crappyimageviewer --overwrite --asar=true --platform=linux --arch=x64 --icon=icon.png --prune=true --out=release-builds"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wagyourtail/CrappyImageViewer.git"
+  },
+  "author": "wagyourtail",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wagyourtail/CrappyImageViewer/issues"
+  },
+  "homepage": "https://github.com/wagyourtail/CrappyImageViewer#readme"
+}
