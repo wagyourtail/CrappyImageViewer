@@ -1,23 +1,29 @@
 body {
+    cursor: auto;
     -webkit-user-select: none;
     margin:0px;
     background-color: black;
+    overflow: hidden;
 }
 
 #topbarContainer {
     position: fixed;
+    overflow: hidden;
     top: 0px;
-    z-index: 3;
     width: 100%;
-    height:30px;
+    height:20px;
+    transition: all .5s ease;
 }
 
 #topbarContainer #topbar {
     overflow:hidden;
     width: 100%;
     height: 0px;
-    transition: all .5s ease;
     background-color: white;
+}
+
+#topbarContainer:hover {
+    height: 200px;
 }
 
 #topbarContainer:hover #topbar {
@@ -33,16 +39,18 @@ body {
     background-color: #dddddd;
 }
 
-#titlebtns {
+#titlebar {
     z-index: 4;
     display: grid;
-    grid-template-columns: auto 30px 30px 30px;
+    grid-template-columns: auto 50px 30px 30px 30px;
+    height: 20px;
+    overflow: hidden;
     border-bottom: 2px;
     border-bottom-style: solid;
     border-bottom-color: black;
 }
 
-#titlebtns div {
+#titlebar div {
     padding-left: 10px;
     padding-right: 5px;
 }
@@ -59,66 +67,16 @@ body {
     background-color: #ff2222;
 }
 
-#imageIcons {
+#topbarLoad {
     width: 100%;
-    overflow-x: scroll;
-    white-space: nowrap;
+    height: 180px;
 }
 
-#imageIcons div {
-    width: 100px;
-    display: inline-block;
-    overflow: hidden;
-    border-width: 2px;
-    border-color: gray;
-    border-style: solid;
-    margin: 10px;
-    padding: 5px;
-    border-radius: 10%;
-    font-size: .5em;
-    cursor: pointer;
-}
-
-#imageIcons div p {
-    display: block;
-    font-size: .5em;
-}
-
-#imageIcons div img {
-    object-fit: contain;
-}
-#imageIcons div:hover {
-    background-color: lightgray;
-}
-
-
-
-#content {
-    position: fixed;
+#imageview {
     width: 100%;
-    top: 0px;
-    z-index: 2;
 }
 
-#info {
-    position:fixed;
-    top: 3px;
-    left: 3px;
-    z-index: 1;
-    color: greenyellow;
-    text-shadow: 2px;
-    font-weight: bold;
-}
-
-#currentImg {
-    cursor: -webkit-zoom-in;
-    position: fixed;
-    z-index: 0;
-    top: 0px;
-    right: 0;
-    left: 0;
-    margin-right: auto;
-    margin-left: auto;
-    max-width: 100%;
-    object-fit: contain;
+#imageviewLoad {
+    width: 100%;
+    height: inherit;
 }
