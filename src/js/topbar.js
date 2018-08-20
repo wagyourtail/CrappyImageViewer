@@ -47,4 +47,5 @@ window.addEventListener("mousewheel", (e) => {
     scrollFn();
 });
 
+window.addEventListener("scroll", scrollFn);
 window.addEventListener("change", scrollFn);

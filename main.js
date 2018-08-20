@@ -25,6 +25,8 @@ function createWindow() {
         win = null;
     });
     
+    win.openDevTools();
+
     /*
     let menu = Menu.buildFromTemplate([{
         label: 'Menu',

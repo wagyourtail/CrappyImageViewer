@@ -9,6 +9,9 @@ let currentImage = 0;
 
 // ---- Topbar ---- //
 
+console.log(topbarLoad.src);
+console.log(imageviewLoad.src);
+
 
 let loadTopbar = () => {
     topbarLoad.stop();
