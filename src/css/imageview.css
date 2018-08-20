@@ -3,7 +3,10 @@ body {
     -webkit-user-select: none;
     margin:0px;
     background-color: black;
-    overflow: hidden;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
 }
 
 #imageText {
@@ -18,14 +21,16 @@ body {
 
 #imageSrc {
     cursor: -webkit-zoom-in;
-    position: fixed;
     z-index: 0;
-    top: 0px;
-    right: 0;
-    left: 0;
-    margin-right: auto;
-    margin-left: auto;
     width: -webkit-fill-available;
     height: -webkit-fill-available;
     object-fit: contain;
+}
+
+#imageSrc:active {
+    cursor: none;
+}
+
+#imageSrc:active + #imageText {
+    display: none;
 }

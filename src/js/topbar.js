@@ -3,21 +3,23 @@ const electron = require("electron");
 const ipc = electron.ipcRenderer;
 
 let scrollFn = () => {}
+let dirLen = 0;
+
 
 ipc.on("dir", (e, data) => {
     let innerData = [];
     let { fileList, dir } = data;
     fileList.dirs.forEach((dir, i) => {
-        innerData.push(`<div id="dir-${i}" onClick="ipc.sendToHost('chdir', '${dir}')"><center><img class="imageIcon" height="90px" width="90px">${folderico}</img><p>${dir}</p></center></div>`);
+        innerData.push(`<div id="dir-${i}" onClick="ipc.sendToHost('chdir', '${dir}')"><center><object width="90px" height="70px">${folderico}</object><p>${dir}</p></center></div>`);
     });
     data.fileList.files.forEach((file, i) => {
         innerData.push(`<div id="image-${i}" onClick="ipc.sendToHost('setImg', ${i})"><center><img class="imageIcon" height="90px" width="90px" alt="${dir}/${file}"><p>${file}</p></center></div>`);
     });
     scrollbox.innerHTML = innerData.join("\n");
-
+    dirLen = fileList.dirs.length;
     scrollFn = () => {
         let scrollDistance = window.scrollX;
-        let a = Math.floor((scrollDistance-10)/138)+(138*fileList.dirs.length);
+        let a = Math.floor((scrollDistance-50)/138-(dirLen/138));
         for (let x = a-50; x < a+window.innerWidth/138+40; x++) {
             if (x > -1 && x < fileList.files.length) {
                 if (Math.abs(a-x) < 25) {
@@ -40,10 +42,9 @@ ipc.on("dir", (e, data) => {
 window.addEventListener("mousewheel", (e) => {
     e = window.event || e;
     let delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-    window.scrollLeft += (delta*40); // Multiplied by 40
+    window.scrollTo(window.scrollX + (delta*100), window.scrollY) // Multiplied by 40
     e.preventDefault();
     scrollFn();
 });
 
-window.addEventListener("scroll", ()=> {scrollFn()});
-window.onchange(scrollFn);
+window.addEventListener("change", scrollFn);

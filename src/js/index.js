@@ -6,26 +6,9 @@ let dir = "";
 let fileList = {files: [], dirs: []};
 let currentImage = 0;
 
-minBtn.addEventListener("click", () => {remote.BrowserWindow.getFocusedWindow().minimize()});
-maxBtn.addEventListener("click", () => {
-    let fullscreen = remote.BrowserWindow.getFocusedWindow().isFullScreen();
-    remote.BrowserWindow.getFocusedWindow().setFullScreen(!fullscreen);
-    topbar.setAttribute("style", fullscreen ? "height: 20px;" : "");
-    title.setAttribute("style", fullscreen ? "-webkit-app-region: drag;" : "");
-    imageview.setAttribute("style", fullscreen ? "margin-top: 20px;" : "")
-    imageviewLoad.style.height= `${fullscreen ? window.innerHeight-20 : window.innerHeight}px`
-});
-closeBtn.addEventListener("click", window.close);
 
-imageview.style.height= `${window.innerHeight}px`;
-window.addEventListener("resize", () => {
-    let fullscreen = remote.BrowserWindow.getFocusedWindow().isFullScreen();
-    imageviewLoad.style.height= `${fullscreen ? window.innerHeight : window.innerHeight-20}px`;
-});
-let sendData = {};
-let sendImageRender = (data) => {
-    sendData = data;
-}
+// ---- Topbar ---- //
+
 
 let loadTopbar = () => {
     topbarLoad.stop();
@@ -51,12 +34,75 @@ topbarLoad.addEventListener("ipc-message", (e) => {
     }
 });
 
+// ---- main image ---- //
+
+
+let sendData = {};
+let sendImageRender = (data) => {
+    sendData = data;
+}
+
+let changeZoom = (num) => {
+
+}
+
 imageviewLoad.addEventListener("dom-ready", () => {
     imageviewLoad.send("setImage", sendData);
     sendImageRender = (data) => {
         imageviewLoad.send("setImage", data);
     }
     sendData = null;
+    changeZoom = (num) => {
+        imageviewLoad.send("changeZoom", num/100);
+    }
+});
+
+
+
+
+
+
+
+imageview.addEventListener("keydown", (key) => {
+    if (key.key == "ArrowLeft" && currentImage > 0) {
+        setImg(currentImage-1);
+    } else if (key.key =="ArrowRight" && currentImage < fileList.files.length-1) {
+        setImg(currentImage+1);
+    } else if (key.key == "F7") {
+        shuffle();
+    }
+});
+
+// ---- bottombar ---- //
+
+zoomInput.addEventListener("change", () => {
+    zoomSlide.value = zoomInput.value;
+    changeZoom(zoomInput.value);
+});
+
+zoomSlide.addEventListener("change", () => {
+    zoomInput.value = zoomSlide.value;
+    changeZoom(zoomInput.value);
+});
+
+
+// ---- mainWindow Controls ---- //
+
+minBtn.addEventListener("click", () => {remote.BrowserWindow.getFocusedWindow().minimize()});
+maxBtn.addEventListener("click", () => {
+    let fullscreen = remote.BrowserWindow.getFocusedWindow().isFullScreen();
+    remote.BrowserWindow.getFocusedWindow().setFullScreen(!fullscreen);
+    topbar.setAttribute("style", fullscreen ? "height: 20px;" : "");
+    title.setAttribute("style", fullscreen ? "-webkit-app-region: drag;" : "");
+    imageview.setAttribute("style", fullscreen ? "margin-top: 20px;" : "")
+    imageviewLoad.style.height= `${fullscreen ? window.innerHeight-20 : window.innerHeight}px`
+});
+closeBtn.addEventListener("click", window.close);
+
+imageview.style.height= `${window.innerHeight}px`;
+window.addEventListener("resize", () => {
+    let fullscreen = remote.BrowserWindow.getFocusedWindow().isFullScreen();
+    imageviewLoad.style.height= `${fullscreen ? window.innerHeight : window.innerHeight-20}px`;
 });
 
 const setDir = (d) => {
@@ -68,7 +114,11 @@ const setDir = (d) => {
             alert(err);
         }
         files.forEach((file) => {
+            try {
             fileList[fs.statSync(`${dir}/${file}`).isDirectory() ? "dirs" : "files"].push(file);
+            } catch(e) {
+                console.log(e);
+            }
         });
         if (fs.statSync(d[0]).isFile()) {
             setImg(fileList.files.indexOf(path.basename(d[0])));
@@ -85,25 +135,6 @@ const setImg = (img) => {
     scrollTo(currentImage);
 }
 
-
-title.addEventListener("click" , () => {
-    let d = remote.dialog.showOpenDialog(remote.BrowserWindow.getFocusedWindow(), {properties: ['openDirectory']});
-    setDir(d);
-});
-setDir([remote.getGlobal("dir")]);
-
-
-window.addEventListener("keydown", (key) => {
-    if (key.key == "ArrowLeft" && currentImage > 0) {
-        setImg(currentImage-1);
-    } else if (key.key =="ArrowRight" && currentImage < fileList.files.length-1) {
-        setImg(currentImage+1);
-    } else if (key.key == "F7") {
-        shuffle();
-    }
-});
-
-
 const shuffle = () => {
     for (let i = fileList.files.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -116,3 +147,12 @@ const shuffle = () => {
     }
     loadTopbar();
 }
+
+
+ 
+title.addEventListener("click" , () => {
+    let d = remote.dialog.showOpenDialog(remote.BrowserWindow.getFocusedWindow(), {properties: ['openDirectory']});
+    setDir(d);
+});
+setDir([remote.getGlobal("dir")]);
+

@@ -12,10 +12,10 @@ body {
     top: 0px;
     width: 100%;
     height:20px;
-    transition: all .5s ease;
 }
 
 #topbarContainer #topbar {
+    transition: all .5s ease;
     overflow:hidden;
     width: 100%;
     height: 0px;
@@ -27,7 +27,6 @@ body {
 }
 
 #topbarContainer:hover #topbar {
-    transition: all .5s ease;
     height: 200px;
 }
 
@@ -40,7 +39,7 @@ body {
 }
 
 #titlebar {
-    z-index: 4;
+    z-index: 1;
     display: grid;
     grid-template-columns: auto 50px 30px 30px 30px;
     height: 20px;
@@ -79,4 +78,30 @@ body {
 #imageviewLoad {
     width: 100%;
     height: inherit;
+}
+
+#bottombarContainer {
+    position: fixed;
+    transition: all .5s ease;
+    overflow:hidden;
+    z-index: 1;
+    bottom: 0px;
+    width: 100%;
+    height: 20px;
+}
+
+#bottombarContainer #bottombar {
+    overflow:hidden;
+    display: grid;
+    grid-template-columns: auto 250px;
+    height: 0px;
+    background-color:white;
+}
+
+#bottombarContainer:hover {
+    height: 30px;
+}
+
+#bottombarContainer:hover #bottombar {
+    height: 30px;
 }
