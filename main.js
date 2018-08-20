@@ -29,7 +29,6 @@ function createWindow() {
     imageviewLoad.src = "file:///${path.join(__dirname, 'src/html/imageview.html').split("\\").join("/")}";
     `)
 
-    win.openDevTools();
 
     /*
     let menu = Menu.buildFromTemplate([{
