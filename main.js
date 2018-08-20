@@ -24,7 +24,13 @@ function createWindow() {
     win.on('closed', () => {
         win = null;
     });
-    
+    win.webContents.executeJavaScript(`
+    topbarLoad.src = "file:///${path.join(__dirname, 'src/html/topbar.html').split("\\").join("/")}";
+    imageviewLoad.src = "file:///${path.join(__dirname, 'src/html/imageview.html').split("\\").join("/")}";
+    `)
+
+    win.openDevTools();
+
     /*
     let menu = Menu.buildFromTemplate([{
         label: 'Menu',

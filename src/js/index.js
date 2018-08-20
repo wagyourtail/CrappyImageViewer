@@ -53,8 +53,8 @@ imageviewLoad.addEventListener("dom-ready", () => {
     imageviewLoad.send("setImage", sendData);
     sendImageRender = (data) => {
         imageviewLoad.send("setImage", data);
+        sendData = data;
     }
-    sendData = null;
     changeZoom = (num) => {
         imageviewLoad.send("changeZoom", num/100);
     }
@@ -104,8 +104,12 @@ closeBtn.addEventListener("click", window.close);
 
 imageview.style.height= `${window.innerHeight}px`;
 window.addEventListener("resize", () => {
+    try{
     let fullscreen = remote.BrowserWindow.getFocusedWindow().isFullScreen();
     imageviewLoad.style.height= `${fullscreen ? window.innerHeight : window.innerHeight-20}px`;
+    } catch(e) {
+
+    }   
 });
 
 const setDir = (d) => {

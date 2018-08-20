@@ -17,8 +17,8 @@ imageSrc.addEventListener("mousedown", (event) => {
 });
 
 imageSrc.addEventListener("mouseup", () => {
-    imageSrc.style.width = null;
-    imageSrc.style.height = null;
+    imageSrc.style.width = null; 
+    imageSrc.style.height = `${window.innerHeight}px`;
     mousedown = false;
 });
 
@@ -27,6 +27,13 @@ window.addEventListener("mousemove", (event) => {
         window.scrollTo(event.clientX*(scale-1), event.clientY*(scale-1));
     }
 });
+
+window.addEventListener("resize", () => {
+    imageSrc.style.height = `${window.innerHeight}px`;
+})
+
+imageSrc.style.height = `${window.innerHeight}px`;
+
 
 ipc.on("setImage", (e, data) => {
     let {dir, str, pos} = data;
