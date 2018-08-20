@@ -10,7 +10,7 @@ global.dir = require('path').resolve(process.argv[process.argv.length-1]);
 
 
 function createWindow() {
-    win  = new BrowserWindow({frame:false,width:1440, height:900,webPreferences: {offscreen: false, nodeIntegrationInWorker: true}});
+    win  = new BrowserWindow({frame:false,width:800, height:450,webPreferences: {offscreen: false, nodeIntegrationInWorker: true}});
 
     win.loadURL(url.format({
         pathname: path.join(__dirname, 'src/html/index.html'),
@@ -25,8 +25,6 @@ function createWindow() {
         win = null;
     });
     
-    win.openDevTools();
-
     /*
     let menu = Menu.buildFromTemplate([{
         label: 'Menu',
